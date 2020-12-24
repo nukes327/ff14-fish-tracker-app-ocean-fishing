@@ -273,8 +273,6 @@ script.innerHTML = `
       startOfWindow = new Date(eorzeaTime.getCurrentEorzeaDate());
     }
 
-    console.log(startOfWindow)
-
     const nextWindows = calculateVoyages(fromET(startOfWindow), this.maxWindows, fish.__routes__);
     let index = 0;
     while (fish.catchableRanges.length < this.maxWindows) {
@@ -297,7 +295,6 @@ script.innerHTML = `
   // Inject new fish, including intuitions
   const oceanFishes = ${JSON.stringify(oceanFishes)};
   for (const fishData of oceanFishes) {
-    console.log(fishData);
     DATA.ITEMS[fishData._id] = FISH_INFO.find(x => x.id === fishData._id);
     for (const id in fishData.predators) {
       DATA.ITEMS[id] = (DATA.ITEMS[id] || FISH_INFO.find(x => x.id === +id));
@@ -307,12 +304,7 @@ script.innerHTML = `
     const fish = createBlueFish(fishData);
     Fishes.push(fish);
     muxinIntuitionReqs(Fishes[Fishes.length - 1], Fishes.length - 1, Fishes);
-
-    ViewModel.activateEntry(fish, Date.now());
   }
-
-  // Refresh ViewModel
-  ViewModel.updateDisplay({ filterCompletion: true, filterPatch: true });
 `
 
 document.body.appendChild(script)
