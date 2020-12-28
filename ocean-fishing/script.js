@@ -186,7 +186,7 @@ const OCEAN_FISHES = [{
   _id: 29789,
   location: 'Southern Merlthor Spectral Current',
   bestCatchPath: [2613],
-  predators: {'29758': 1},
+  predators: {'29758': 2},
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['NS', 'RD'],
