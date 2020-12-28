@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "ff14 tracker with ocean fish",
-  "version": "1.0",
-  "description": "lulu",
+  "name": "Add Ocean Fish to FF14 Fish Tracker",
+  "version": "1.1",
+  "description": "Adds blue ocean fish to the list of fishes on the FF14 Fish Tracker App",
   "content_scripts": [
     {
       "matches": ["https://ff14fish.carbuncleplushy.com/"],

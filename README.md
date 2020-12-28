@@ -14,8 +14,6 @@ This is a quick and dirty Chrome extension to add the blue ocean fishes to https
 
  - Only blue fish (and their intuition fishes) are added
  - Blue fish windows are always 45 minutes starting on the hour, when the boat begins boarding
- - Ocean fish location is always The Tempest because I had to put it as something
- - Ocean fish are marked as Patch 5.0 because idk what they are
  - Green fish/intuition fish show up with an availability of Always for simplicity
- - No i18n stuff
+ - The map button does not work
  - Importing/exporting works, even with Lalachievements
