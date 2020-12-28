@@ -168,6 +168,7 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['ND', 'RS'],
+  __requirement__: 'Night'
 }, {
   // Hi-aetherlouse
   _id: 29761,
@@ -188,7 +189,8 @@ const OCEAN_FISHES = [{
   predators: {'29758': 1},
   tug: 'heavy',
   __isBlueFish__: true,
-  __routes__: ['NS', 'RD']
+  __routes__: ['NS', 'RD'],
+  __requirement__: 'Night'
 }, {
   // Gugrusaurus
   _id: 29781,
@@ -203,7 +205,8 @@ const OCEAN_FISHES = [{
   predators: {'29781': 3},
   tug: 'heavy',
   __isBlueFish__: true,
-  __routes__: ['BS', 'ND']
+  __routes__: ['BS', 'ND'],
+  __requirement__: 'Day'
 }, {
   // Deep-sea Eel
   _id: 29769,
@@ -224,7 +227,8 @@ const OCEAN_FISHES = [{
   predators: {'29769': 1, '29768': 1},
   tug: 'heavy',
   __isBlueFish__: true,
-  __routes__: ['RS', 'TN']
+  __routes__: ['RS', 'TN'],
+  __requirement__: 'Sunset'
 }, {
   // Jetborne Manta
   _id: 32070,
@@ -248,7 +252,8 @@ const OCEAN_FISHES = [{
   predators: {'32070': 2, '32067': 1},
   tug: 'heavy',
   __isBlueFish__: true,
-  __routes__: ['BS', 'TS']
+  __routes__: ['BS', 'TS'],
+  __requirement__: 'Night'
 }, {
   // Beatific Vision
   _id: 32089,
@@ -265,7 +270,8 @@ const OCEAN_FISHES = [{
   predators: {'32089': 3},
   tug: 'heavy',
   __isBlueFish__: true,
-  __routes__: ['BD']
+  __routes__: ['BD'],
+  __requirement__: 'Day'
 }, {
   // Rothlyt Mussel
   _id: 32107,
@@ -289,20 +295,9 @@ const OCEAN_FISHES = [{
   predators: {'32110': 1},
   tug: 'heavy',
   __isBlueFish__: true,
-  __routes__: ['TS']
+  __routes__: ['TS'],
+  __requirement__: 'Sunset'
 }].map(fillFishData)
-
-const oceanFishing = {
-  _id: 999999,
-  name_en: 'Ocean Fishing',
-  name_ja: 'Ocean Fishing',
-  name_de: 'Ocean Fishing',
-  name_fr: 'Ocean Fishing',
-  name_ko: 'Ocean Fishing',
-  territory_id: 999999,
-  placename_id: 231,
-  map_coords: [0, 0, 0]
-}
 
 script.innerHTML = `
 ;(() => {
@@ -422,6 +417,24 @@ script.innerHTML = `
     Fishes.push(fish)
     muxinIntuitionReqs(Fishes[Fishes.length - 1], Fishes.length - 1, Fishes)
   }
+
+  // Modify the fish template to display the route required for blue fish
+  const templateScript = document.getElementById('fish-template')
+  console.log($(templateScript).text())
+  const newTemplateString = $(templateScript).text().replace(
+    /{{\\?[^{}]*?}}\\s*All Day\\s*{{\\?\\?}}[\\s\\S]*?{{\\?}}/g,
+    \`
+    {{? it.data.__isBlueFish__ }}
+      {{=it.data.__requirement__}}
+    {{?? it.data.startHour === 0 && it.data.endHour === 24}}
+      All Day
+    {{??}}
+      {{=it.data.startHour + ' - ' + it.data.endHour}}
+    {{?}}
+    \`
+  )
+  console.log(newTemplateString)
+  ViewModel.layout.templates.fishEntry = doT.template(newTemplateString)
 })()
 `
 
