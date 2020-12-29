@@ -3,6 +3,10 @@
 const script = document.createElement('script')
 script.type = 'text/javascript'
 
+// This is how many minutes the window will be up starting when the boat begins boarding
+// The last boat ends around :40-:42
+const WINDOW_LENGTH = 45
+
 // Icons will be replaced by the icons of the similar bait
 const NEW_BAITS = {
   ragworm: {
@@ -355,7 +359,7 @@ script.innerHTML = `
     if (fishData.__isBlueFish__) {
       fish.alwaysAvailable = false
       fish.isFishAlwaysUpUsingFishEyes = () => false
-      fish.uptime = () => 45 / 1440
+      fish.uptime = () => ${WINDOW_LENGTH} * fishData.__routes__.length / 1440
     }
     return fish
   }
@@ -380,7 +384,7 @@ script.innerHTML = `
     let index = 0
     while (fish.catchableRanges.length < this.maxWindows) {
       const startTime = toET(nextWindows[index].time)
-      const range = moment(startTime).twix(new Date(startTime.getTime() + Math.floor(2700000 * EORZEAN_RATIO)))
+      const range = moment(startTime).twix(new Date(startTime.getTime() + Math.floor(${WINDOW_LENGTH * 60000} * EORZEAN_RATIO)))
       fish.addCatchableRange(range)
       ++index
     }
