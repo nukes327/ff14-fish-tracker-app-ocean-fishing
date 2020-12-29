@@ -57,7 +57,7 @@ const OCEAN_FISHING_LOCATIONS = [{
   name_ko: '갈라디온 만 먼바다: 환해류',
   territory_id: OCEAN_FISHING_ZONE._id,
   placename_id: 238,
-  map_coords: [0, 0, 0]
+  map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 240,
   name_en: 'Southern Merlthor Spectral Current',
@@ -67,7 +67,7 @@ const OCEAN_FISHING_LOCATIONS = [{
   name_ko: '멜토르 해협 남쪽: 환해류',
   territory_id: OCEAN_FISHING_ZONE._id,
   placename_id: 240,
-  map_coords: [0, 0, 0]
+  map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 244,
   name_en: 'Northern Merlthor Spectral Current',
@@ -77,7 +77,7 @@ const OCEAN_FISHING_LOCATIONS = [{
   name_ko: '멜토르 해협 북쪽: 환해류',
   territory_id: OCEAN_FISHING_ZONE._id,
   placename_id: 244,
-  map_coords: [0, 0, 0]
+  map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 242,
   name_en: 'Rhotano Spectral Current',
@@ -87,7 +87,7 @@ const OCEAN_FISHING_LOCATIONS = [{
   name_ko: '로타노 해 먼바다: 환해류',
   territory_id: OCEAN_FISHING_ZONE._id,
   placename_id: 242,
-  map_coords: [0, 0, 0]
+  map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 247,
   name_en: 'Cieldalaes Spectral Current',
@@ -97,7 +97,7 @@ const OCEAN_FISHING_LOCATIONS = [{
   name_ko: 'Cieldalaes Spectral Current',
   territory_id: OCEAN_FISHING_ZONE._id,
   placename_id: 247,
-  map_coords: [0, 0, 0]
+  map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 249,
   name_en: 'Bloodbrine Spectral Current',
@@ -107,7 +107,7 @@ const OCEAN_FISHING_LOCATIONS = [{
   name_ko: 'Bloodbrine Spectral Current',
   territory_id: OCEAN_FISHING_ZONE._id,
   placename_id: 249,
-  map_coords: [0, 0, 0]
+  map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 251,
   name_en: 'Rothlyt Spectral Current',
@@ -117,7 +117,7 @@ const OCEAN_FISHING_LOCATIONS = [{
   name_ko: 'Rothlyt Spectral Current',
   territory_id: OCEAN_FISHING_ZONE._id,
   placename_id: 251,
-  map_coords: [0, 0, 0]
+  map_coords: [21.5, 21.5, 2500]
 }]
 
 // All fish will have no time/weather conditions, but blue fish
@@ -405,8 +405,13 @@ script.innerHTML = `
   const OCEAN_FISHING_LOCATIONS = ${JSON.stringify(OCEAN_FISHING_LOCATIONS)}
   for (const oceanFishingLocation of OCEAN_FISHING_LOCATIONS) {
     DATA.FISHING_SPOTS[oceanFishingLocation._id] = oceanFishingLocation
-    DATA.WEATHER_RATES[oceanFishingLocation.territory_id] = { zone_id: OCEAN_FISHING_ZONE._id }
+    DATA.WEATHER_RATES[oceanFishingLocation.territory_id] = {
+      zone_id: OCEAN_FISHING_ZONE._id,
+      map_id: OCEAN_FISHING_ZONE._id,
+      map_scale: 100 // Idk how these work, but map_scale: 100 with coords: [21.5, 21.5, 2500] looks good for this map
+    }
   }
+  FishingSpotMap.mapUrls[OCEAN_FISHING_ZONE._id] = 'https://xivapi.com/m/o1a1/o1a1.00.jpg'
 
   // Inject new fish, including intuitions
   const OCEAN_FISHES = ${JSON.stringify(OCEAN_FISHES)}
