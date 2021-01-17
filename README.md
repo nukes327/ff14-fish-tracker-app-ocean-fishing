@@ -4,6 +4,8 @@ This is a quick and dirty Chrome extension to add the blue ocean fishes to https
 
 ## Installation
 
+**It is now available on the Chrome Web Store at [https://chrome.google.com/webstore/detail/add-ocean-fish-to-ff14-fi/oihefgmncbnicjmcdccjflagboaidenh](https://chrome.google.com/webstore/detail/add-ocean-fish-to-ff14-fi/oihefgmncbnicjmcdccjflagboaidenh)**
+
 1. Download and unzip this repository, and keep it somewhere comfy ([Download](https://github.com/pillowfication/ff14-fish-tracker-app-ocean-fishing/archive/master.zip))
 2. Head on over to [chrome://extensions/](chrome://extensions/)
 3. Click “Load unpacked” and select the `/ocean-fishing` folder (not the entire folder)

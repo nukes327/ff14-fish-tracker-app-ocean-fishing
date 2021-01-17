@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Add Ocean Fish to FF14 Fish Tracker",
-  "version": "1.2",
+  "version": "1.3",
   "description": "Adds blue ocean fish to the list of fishes on the FF14 Fish Tracker App",
   "content_scripts": [
     {
