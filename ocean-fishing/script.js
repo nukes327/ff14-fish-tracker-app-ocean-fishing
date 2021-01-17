@@ -171,7 +171,8 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['ND', 'RS'],
-  __requirement__: 'Night'
+  __requirement__: 'Night',
+  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=sothis'
 }, {
   // Hi-aetherlouse
   _id: 29761,
@@ -193,7 +194,8 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['NS', 'RD'],
-  __requirement__: 'Night'
+  __requirement__: 'Night',
+  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=coral_manta'
 }, {
   // Gugrusaurus
   _id: 29781,
@@ -209,7 +211,8 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['BS', 'ND'],
-  __requirement__: 'Day'
+  __requirement__: 'Day',
+  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=elasmosaurus'
 }, {
   // Deep-sea Eel
   _id: 29769,
@@ -231,7 +234,8 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['RS', 'TN'],
-  __requirement__: 'Sunset'
+  __requirement__: 'Sunset',
+  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=stonescale'
 }, {
   // Jetborne Manta
   _id: 32070,
@@ -256,7 +260,8 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['BS', 'TS'],
-  __requirement__: 'Night'
+  __requirement__: 'Night',
+  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=hafgufa'
 }, {
   // Beatific Vision
   _id: 32089,
@@ -274,7 +279,8 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['BD'],
-  __requirement__: 'Day'
+  __requirement__: 'Day',
+  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=seafaring_toad'
 }, {
   // Rothlyt Mussel
   _id: 32107,
@@ -299,7 +305,8 @@ const OCEAN_FISHES = [{
   tug: 'heavy',
   __isBlueFish__: true,
   __routes__: ['TS'],
-  __requirement__: 'Sunset'
+  __requirement__: 'Sunset',
+  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=placodus'
 }].map(fillFishData)
 
 script.innerHTML = `
@@ -402,18 +409,28 @@ script.innerHTML = `
 
   // Modify the fish template to display the route required for blue fish
   const templateScript = document.getElementById('fish-template')
-  const newTemplateString = $(templateScript).text().replace(
-    /{{\\?[^{}]*?}}\\s*All Day\\s*{{\\?\\?}}[\\s\\S]*?{{\\?}}/g,
-    \`
-    {{? it.data.__isBlueFish__ }}
-      {{=it.data.__requirement__}}
-    {{?? it.data.startHour === 0 && it.data.endHour === 24}}
-      All Day
-    {{??}}
-      {{=it.data.startHour + ' - ' + it.data.endHour}}
-    {{?}}
-    \`
-  )
+  const newTemplateString = $(templateScript).text()
+    .replace(
+      /{{\\?[^{}]*?}}\\s*All Day\\s*{{\\?\\?}}[\\s\\S]*?{{\\?}}/,
+      \`
+        {{? it.data.__isBlueFish__ }}
+          {{=it.data.__requirement__}}
+        {{?? it.data.startHour === 0 && it.data.endHour === 24}}
+          All Day
+        {{??}}
+          {{=it.data.startHour + ' - ' + it.data.endHour}}
+        {{?}}
+      \`
+    )
+    .replace(
+      /{{\\?\\s*?it\\.data\\.conditions\\.previousWeatherSet.*?}}/,
+      m => {console.log(m); return \`
+        {{? it.data.__isBlueFish__ }}
+          <a href="{{=it.data.__pfnUrl__}}" target="_blank">pf-n.co</a>
+        {{?}}
+      \` + m}
+    )
+
   ViewModel.layout.templates.fishEntry = doT.template(newTemplateString)
 })()
 `
