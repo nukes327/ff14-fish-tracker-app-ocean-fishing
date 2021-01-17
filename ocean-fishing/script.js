@@ -38,14 +38,13 @@ const NEW_BAITS = {
   }
 }
 
-// I used Google Translate here
 const OCEAN_FISHING_ZONE = {
   _id: 999999,
   name_en: 'Ocean Fishing',
-  name_ja: '海釣り',
-  name_de: 'Hochseefischen',
+  name_ja: 'オーシャンフィッシング',
+  name_de: 'Auf großer Fahrt',
   name_fr: 'Pêche en mer',
-  name_ko: '바다 낚시'
+  name_ko: '바다 낚시' // I used Google Translate here
 }
 
 const OCEAN_FISHING_LOCATIONS = [{
@@ -305,53 +304,27 @@ const OCEAN_FISHES = [{
 
 script.innerHTML = `
 ;(() => {
-  const _9HR = 32400000
   const _45MIN = 2700000
-  const LULU_EPOCH = 1593270000000 + _9HR
-  const DEST_CYCLE = 'BTNR'
-  const TIME_CYCLE = 'SSSSNNNNDDDD'
   const EORZEAN_RATIO = 1440 / 70
 
   function toET (date) { return new Date(Math.floor(date.getTime() * EORZEAN_RATIO)) }
   function fromET (date) { return new Date(Math.floor(date.getTime() / EORZEAN_RATIO)) }
-  function fromEpoch (day, hour) { return new Date(LULU_EPOCH + day * 86400000 + hour * 3600000 - _9HR) }
+
+  const PATTERN = ['BD', 'TD', 'ND', 'RD', 'BS', 'TS', 'NS', 'BN', 'TN', 'NN', 'RN', 'BD', 'TD', 'ND', 'RD', 'BS', 'TS', 'NS', 'RS', 'TN', 'NN', 'RN', 'BD', 'TD', 'ND', 'RD', 'BS', 'TS', 'NS', 'RS', 'BN', 'NN', 'RN', 'BD', 'TD', 'ND', 'RD', 'BS', 'TS', 'NS', 'RS', 'BN', 'TN', 'RN', 'BD', 'TD', 'ND', 'RD', 'BS', 'TS', 'NS', 'RS', 'BN', 'TN', 'NN', 'BD', 'TD', 'ND', 'RD', 'BS', 'TS', 'NS', 'RS', 'BN', 'TN', 'NN', 'RN', 'TD', 'ND', 'RD', 'BS', 'TS', 'NS', 'RS', 'BN', 'TN', 'NN', 'RN', 'BD', 'ND', 'RD', 'BS', 'TS', 'NS', 'RS', 'BN', 'TN', 'NN', 'RN', 'BD', 'TD', 'RD', 'BS', 'TS', 'NS', 'RS', 'BN', 'TN', 'NN', 'RN', 'BD', 'TD', 'ND', 'BS', 'TS', 'NS', 'RS', 'BN', 'TN', 'NN', 'RN', 'BD', 'TD', 'ND', 'RD', 'TS', 'NS', 'RS', 'BN', 'TN', 'NN', 'RN', 'BD', 'TD', 'ND', 'RD', 'BS', 'NS', 'RS', 'BN', 'TN', 'NN', 'RN', 'BD', 'TD', 'ND', 'RD', 'BS', 'TS', 'RS', 'BN', 'TN', 'NN', 'RN']
 
   function calculateVoyages (date, count, filter) {
-    date = new Date(date.getTime() + _9HR - _45MIN) // Subtract 45 minutes to catch ongoing voyages
-    let day = Math.floor((date.getTime() - LULU_EPOCH) / 86400000)
-    let hour = date.getUTCHours()
-
-    hour += (hour & 1) ? 2 : 1
-    if (hour > 23) {
-      day += 1
-      hour -= 24
-    }
-
-    // Find the current voyage
-    const voyageNumber = hour >> 1
-    let destIndex = (day + voyageNumber) % 4
-    let timeIndex = (day + voyageNumber) % 12
-
-    // Loop until however many voyages are found
-    const upcomingVoyages = []
-    while (upcomingVoyages.length < count) {
-      const destinationCode = DEST_CYCLE[destIndex] + TIME_CYCLE[timeIndex]
+    const startIndex = Math.floor((date.getTime() - _45MIN) / 7200000)
+    const results = []
+    for (let i = 0; results.length < count; ++i) {
+      const destinationCode = PATTERN[(startIndex + i) % 144]
       if (!filter || filter.includes(destinationCode)) {
-        upcomingVoyages.push({ time: fromEpoch(day, hour), destinationCode })
-      }
-      if (hour === 23) {
-        day += 1
-        hour = 1
-        destIndex = (destIndex + 2) % 4
-        timeIndex = (timeIndex + 2) % 12
-      } else {
-        hour += 2
-        destIndex = (destIndex + 1) % 4
-        timeIndex = (timeIndex + 1) % 12
+        results.push({
+          time: new Date((startIndex + i + 1) * 7200000),
+          destinationCode
+        })
       }
     }
-
-    return upcomingVoyages
+    return results
   }
 
   function createBlueFish (fishData) {
@@ -429,7 +402,6 @@ script.innerHTML = `
 
   // Modify the fish template to display the route required for blue fish
   const templateScript = document.getElementById('fish-template')
-  console.log($(templateScript).text())
   const newTemplateString = $(templateScript).text().replace(
     /{{\\?[^{}]*?}}\\s*All Day\\s*{{\\?\\?}}[\\s\\S]*?{{\\?}}/g,
     \`
@@ -442,7 +414,6 @@ script.innerHTML = `
     {{?}}
     \`
   )
-  console.log(newTemplateString)
   ViewModel.layout.templates.fishEntry = doT.template(newTemplateString)
 })()
 `
