@@ -8,119 +8,130 @@ script.type = 'text/javascript'
 const WINDOW_LENGTH = 45
 
 // Icons will be replaced by the icons of the similar bait
-const NEW_BAITS = {
+const OF_BAITS = {
   ragworm: {
     _id: 29714,
     name_en: 'Ragworm',
-    name_ja: 'イワイソメ',
     name_de: 'Steinwurm',
     name_fr: 'Teigne',
+    name_ja: 'イワイソメ',
+    name_cn: '石沙蚕',
     name_ko: '바위털갯지렁이',
     icon: 'Blue Bobbit'
   },
   krill: {
     _id: 29715,
     name_en: 'Krill',
-    name_ja: 'クリル',
     name_de: 'Krill',
     name_fr: 'Krill',
+    name_ja: 'クリル',
+    name_cn: '磷虾',
     name_ko: '크릴',
     icon: 'Northern Krill'
   },
   plumpWorm: {
     _id: 29716,
     name_en: 'Plump Worm',
-    name_ja: 'ファットワーム',
     name_de: 'Dickwurm',
     name_fr: 'Ver charnu',
+    name_ja: 'ファットワーム',
+    name_cn: '刺螠',
     name_ko: '굵은지렁이',
     icon: 'Spoon Worm'
   }
 }
 
-const OCEAN_FISHING_ZONE = {
-  _id: 999999,
+const OF_ZONE = {
+  _id: 1117118, // Random unique ID
   name_en: 'Ocean Fishing',
-  name_ja: 'オーシャンフィッシング',
   name_de: 'Auf großer Fahrt',
   name_fr: 'Pêche en mer',
-  name_ko: '바다 낚시' // I used Google Translate here
+  name_ja: 'オーシャンフィッシング',
+  name_cn: '出海垂钓',
+  name_ko: '먼바다 낚시'
 }
 
-const OCEAN_FISHING_LOCATIONS = [{
+const OF_LOCATIONS = [{
   _id: 238,
   name_en: 'Galadion Spectral Current',
-  name_ja: 'ガラディオン湾沖合：幻海流',
   name_de: 'Galadion-Bucht - Phantomströmung',
   name_fr: 'Courant spectral (large de la baie de Galadion)',
+  name_ja: 'ガラディオン湾沖合：幻海流',
+  name_cn: '加拉迪翁湾外海幻海流',
   name_ko: '갈라디온 만 먼바다: 환해류',
-  territory_id: OCEAN_FISHING_ZONE._id,
+  territory_id: OF_ZONE._id,
   placename_id: 238,
   map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 240,
   name_en: 'Southern Merlthor Spectral Current',
-  name_ja: 'メルトール海峡南：幻海流',
   name_de: 'Merlthorstraße (Süd) - Phantomströmung',
   name_fr: 'Courant spectral (détroit sud de Merlthor)',
+  name_ja: 'メルトール海峡南：幻海流',
+  name_cn: '梅尔托尔海峡南幻海流',
   name_ko: '멜토르 해협 남쪽: 환해류',
-  territory_id: OCEAN_FISHING_ZONE._id,
+  territory_id: OF_ZONE._id,
   placename_id: 240,
   map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 244,
   name_en: 'Northern Merlthor Spectral Current',
-  name_ja: 'メルトール海峡北：幻海流',
   name_de: 'Merlthorstraße (Nord) - Phantomströmung',
   name_fr: 'Courant spectral (détroit nord de Merlthor)',
+  name_ja: 'メルトール海峡北：幻海流',
+  name_cn: '梅尔托尔海峡北幻海流',
   name_ko: '멜토르 해협 북쪽: 환해류',
-  territory_id: OCEAN_FISHING_ZONE._id,
+  territory_id: OF_ZONE._id,
   placename_id: 244,
   map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 242,
   name_en: 'Rhotano Spectral Current',
-  name_ja: 'ロータノ海沖合：幻海流',
   name_de: 'Rhotano-See - Phantomströmung',
   name_fr: 'Courant spectral (large de la mer de Rhotano)',
+  name_ja: 'ロータノ海沖合：幻海流',
+  name_cn: '罗塔诺海海面幻海流',
   name_ko: '로타노 해 먼바다: 환해류',
-  territory_id: OCEAN_FISHING_ZONE._id,
+  territory_id: OF_ZONE._id,
   placename_id: 242,
   map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 247,
   name_en: 'Cieldalaes Spectral Current',
-  name_ja: 'シェルダレー諸島沖合：幻海流',
   name_de: 'Cieldaläen - Phantomströmung',
   name_fr: 'Courant spectral (large des îles de Cieldalaes)',
+  name_ja: 'シェルダレー諸島沖合：幻海流',
+  name_cn: '谢尔达莱群岛近海幻海流',
   name_ko: 'Cieldalaes Spectral Current',
-  territory_id: OCEAN_FISHING_ZONE._id,
+  territory_id: OF_ZONE._id,
   placename_id: 247,
   map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 249,
   name_en: 'Bloodbrine Spectral Current',
-  name_ja: '緋汐海沖合：幻海流',
   name_de: 'Schwerblütiges Meer - Phantomströmung',
   name_fr: 'Courant spectral (large de la mer Pourpre)',
+  name_ja: '緋汐海沖合：幻海流',
+  name_cn: '绯汐海近海幻海流',
   name_ko: 'Bloodbrine Spectral Current',
-  territory_id: OCEAN_FISHING_ZONE._id,
+  territory_id: OF_ZONE._id,
   placename_id: 249,
   map_coords: [21.5, 21.5, 2500]
 }, {
   _id: 251,
   name_en: 'Rothlyt Spectral Current',
-  name_ja: 'ロズリト湾沖合：幻海流',
   name_de: 'Rothlyt-Meerbusen - Phantomströmung',
   name_fr: 'Courant spectral (large du golfe de Rothlyt)',
+  name_ja: 'ロズリト湾沖合：幻海流',
+  name_cn: '罗斯利特湾近海幻海流',
   name_ko: 'Rothlyt Spectral Current',
-  territory_id: OCEAN_FISHING_ZONE._id,
+  territory_id: OF_ZONE._id,
   placename_id: 251,
   map_coords: [21.5, 21.5, 2500]
 }]
 
 // All fish will have no time/weather conditions, but blue fish
-// have the additional __isBlueFish__ and __routes__ attributes
+// have the additional OF_isBlueFish and OF_routes attributes
 // which will be used to calculate their windows
 function fillFishData (fishData) {
   const obj = Object.assign({
@@ -143,14 +154,14 @@ function fillFishData (fishData) {
     aquarium: null,
     dataMissing: null
   }, fishData)
-  const oceanFishingLocation = OCEAN_FISHING_LOCATIONS.find(location => location.name_en === obj.location)
+  const oceanFishingLocation = OF_LOCATIONS.find(location => location.name_en === obj.location)
   obj.location = oceanFishingLocation ? oceanFishingLocation._id : obj.location
   obj.hookset = obj.tug == 'light' ? 'Precision' : 'Powerful'
 
   return obj
 }
 
-const OCEAN_FISHES = [{
+const OF_FISHES = [{
   // Heavenskey
   _id: 29749,
   location: 'Galadion Spectral Current',
@@ -169,21 +180,21 @@ const OCEAN_FISHES = [{
   bestCatchPath: [2603],
   predators: {'29749': 2, '29752': 1},
   tug: 'heavy',
-  __isBlueFish__: true,
-  __routes__: ['ND', 'RS'],
-  __requirement__: 'Night',
-  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=sothis'
+  OF_isBlueFish: true,
+  OF_routes: ['ND', 'RS'],
+  OF_requirement: 'Night',
+  OF_pfnUrl: 'https://ffxiv.pf-n.co/ocean-fishing?filter=sothis'
 }, {
   // Hi-aetherlouse
   _id: 29761,
   location: 'Southern Merlthor Spectral Current',
-  bestCatchPath: [29716],
+  bestCatchPath: [29714],
   tug: 'light'
 }, {
   // Great Grandmarlin
   _id: 29758,
   location: 'Southern Merlthor Spectral Current',
-  bestCatchPath: [29716, 29761],
+  bestCatchPath: [29714, 29761],
   tug: 'medium'
 }, {
   // Coral Manta
@@ -192,10 +203,10 @@ const OCEAN_FISHES = [{
   bestCatchPath: [2613],
   predators: {'29758': 2},
   tug: 'heavy',
-  __isBlueFish__: true,
-  __routes__: ['NS', 'RD'],
-  __requirement__: 'Night',
-  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=coral_manta'
+  OF_isBlueFish: true,
+  OF_routes: ['NS', 'RD'],
+  OF_requirement: 'Night',
+  OF_pfnUrl: 'https://ffxiv.pf-n.co/ocean-fishing?filter=coral_manta'
 }, {
   // Gugrusaurus
   _id: 29781,
@@ -209,15 +220,15 @@ const OCEAN_FISHES = [{
   bestCatchPath: [2619],
   predators: {'29781': 3},
   tug: 'heavy',
-  __isBlueFish__: true,
-  __routes__: ['BS', 'ND'],
-  __requirement__: 'Day',
-  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=elasmosaurus'
+  OF_isBlueFish: true,
+  OF_routes: ['BS', 'ND'],
+  OF_requirement: 'Day',
+  OF_pfnUrl: 'https://ffxiv.pf-n.co/ocean-fishing?filter=elasmosaurus'
 }, {
   // Deep-sea Eel
   _id: 29769,
   location: 'Rhotano Spectral Current',
-  bestCatchPath: [29716],
+  bestCatchPath: [2591],
   tug: 'medium'
 }, {
   // Silencer
@@ -232,10 +243,10 @@ const OCEAN_FISHES = [{
   bestCatchPath: [2591],
   predators: {'29769': 1, '29768': 1},
   tug: 'heavy',
-  __isBlueFish__: true,
-  __routes__: ['RS', 'TN'],
-  __requirement__: 'Sunset',
-  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=stonescale'
+  OF_isBlueFish: true,
+  OF_routes: ['RS', 'TN'],
+  OF_requirement: 'Sunset',
+  OF_pfnUrl: 'https://ffxiv.pf-n.co/ocean-fishing?filter=stonescale'
 }, {
   // Jetborne Manta
   _id: 32070,
@@ -247,7 +258,7 @@ const OCEAN_FISHES = [{
   // Mistbeard's Cup
   _id: 32067,
   location: 'Cieldalaes Spectral Current',
-  bestCatchPath: [29715],
+  bestCatchPath: [27590],
   patch: 5.4,
   tug: 'medium'
 }, {
@@ -258,15 +269,15 @@ const OCEAN_FISHES = [{
   patch: 5.4,
   predators: {'32070': 2, '32067': 1},
   tug: 'heavy',
-  __isBlueFish__: true,
-  __routes__: ['BS', 'TS'],
-  __requirement__: 'Night',
-  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=hafgufa'
+  OF_isBlueFish: true,
+  OF_routes: ['BS', 'TS'],
+  OF_requirement: 'Night',
+  OF_pfnUrl: 'https://ffxiv.pf-n.co/ocean-fishing?filter=hafgufa'
 }, {
   // Beatific Vision
   _id: 32089,
   location: 'Bloodbrine Spectral Current',
-  bestCatchPath: [29715],
+  bestCatchPath: [2587],
   patch: 5.4,
   tug: 'medium'
 }, {
@@ -277,10 +288,10 @@ const OCEAN_FISHES = [{
   patch: 5.4,
   predators: {'32089': 3},
   tug: 'heavy',
-  __isBlueFish__: true,
-  __routes__: ['BD'],
-  __requirement__: 'Day',
-  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=seafaring_toad'
+  OF_isBlueFish: true,
+  OF_routes: ['BD'],
+  OF_requirement: 'Day',
+  OF_pfnUrl: 'https://ffxiv.pf-n.co/ocean-fishing?filter=seafaring_toad'
 }, {
   // Rothlyt Mussel
   _id: 32107,
@@ -303,10 +314,10 @@ const OCEAN_FISHES = [{
   patch: 5.4,
   predators: {'32110': 1},
   tug: 'heavy',
-  __isBlueFish__: true,
-  __routes__: ['TS'],
-  __requirement__: 'Sunset',
-  __pfnUrl__: 'https://ffxiv.pf-n.co/ocean-fishing?filter=placodus'
+  OF_isBlueFish: true,
+  OF_routes: ['TS'],
+  OF_requirement: 'Sunset',
+  OF_pfnUrl: 'https://ffxiv.pf-n.co/ocean-fishing?filter=placodus'
 }].map(fillFishData)
 
 script.innerHTML = `
@@ -336,18 +347,18 @@ script.innerHTML = `
 
   function createBlueFish (fishData) {
     const fish = new Fish(fishData)
-    if (fishData.__isBlueFish__) {
+    if (fishData.OF_isBlueFish) {
       fish.alwaysAvailable = false
       fish.isFishAlwaysUpUsingFishEyes = () => false
-      fish.uptime = () => ${WINDOW_LENGTH} * fishData.__routes__.length / 1440
+      fish.uptime = () => ${WINDOW_LENGTH} * fishData.OF_routes.length / 1440
     }
     return fish
   }
 
   // Intercept the FishWatcher's range calculation thinggy
   const oldUpdateRangesForFish = fishWatcher.updateRangesForFish
-  fishWatcher.updateRangesForFish = function (fish) {
-    if (!fish.__isBlueFish__) {
+  fishWatcher.updateRangesForFish = function updateRangesForFish (fish) {
+    if (!fish.OF_isBlueFish) {
       return oldUpdateRangesForFish.apply(fishWatcher, arguments)
     }
 
@@ -360,42 +371,44 @@ script.innerHTML = `
       startOfWindow = new Date(eorzeaTime.getCurrentEorzeaDate())
     }
 
-    const nextWindows = calculateVoyages(fromET(startOfWindow), this.maxWindows, fish.__routes__)
+    const nextWindows = calculateVoyages(fromET(startOfWindow), this.maxWindows, fish.OF_routes)
     let index = 0
     while (fish.catchableRanges.length < this.maxWindows) {
       const startTime = toET(nextWindows[index].time)
-      const range = moment(startTime).twix(new Date(startTime.getTime() + Math.floor(${WINDOW_LENGTH * 60000} * EORZEAN_RATIO)))
-      fish.addCatchableRange(range)
+      fish.addCatchableRange({
+        start: startTime,
+        end: new Date(startTime.getTime() + Math.floor(${WINDOW_LENGTH * 60000} * EORZEAN_RATIO))
+      })
       ++index
     }
   }
 
   // Inject new baits and give them the correct icons
-  const NEW_BAITS = ${JSON.stringify(NEW_BAITS)}
-  for (const bait of Object.keys(NEW_BAITS)) {
-    const baitInfo = NEW_BAITS[bait]
+  const OF_BAITS = ${JSON.stringify(OF_BAITS)}
+  for (const bait of Object.keys(OF_BAITS)) {
+    const baitInfo = OF_BAITS[bait]
     baitInfo.icon = Object.values(DATA.ITEMS).find(bait => bait.name_en === baitInfo.icon).icon
     DATA.ITEMS[baitInfo._id] = baitInfo
   }
 
   // Inject new fishing spots
-  const OCEAN_FISHING_ZONE = ${JSON.stringify(OCEAN_FISHING_ZONE)}
-  DATA.ZONES[OCEAN_FISHING_ZONE._id] = OCEAN_FISHING_ZONE
+  const OF_ZONE = ${JSON.stringify(OF_ZONE)}
+  DATA.ZONES[OF_ZONE._id] = OF_ZONE
 
-  const OCEAN_FISHING_LOCATIONS = ${JSON.stringify(OCEAN_FISHING_LOCATIONS)}
-  for (const oceanFishingLocation of OCEAN_FISHING_LOCATIONS) {
+  const OF_LOCATIONS = ${JSON.stringify(OF_LOCATIONS)}
+  for (const oceanFishingLocation of OF_LOCATIONS) {
     DATA.FISHING_SPOTS[oceanFishingLocation._id] = oceanFishingLocation
     DATA.WEATHER_RATES[oceanFishingLocation.territory_id] = {
-      zone_id: OCEAN_FISHING_ZONE._id,
-      map_id: OCEAN_FISHING_ZONE._id,
+      zone_id: OF_ZONE._id,
+      map_id: OF_ZONE._id,
       map_scale: 100 // Idk how these work, but map_scale: 100 with coords: [21.5, 21.5, 2500] looks good for this map
     }
   }
-  FishingSpotMap.mapUrls[OCEAN_FISHING_ZONE._id] = 'https://xivapi.com/m/o1a1/o1a1.00.jpg'
+  FishingSpotMap.mapUrls[OF_ZONE._id] = 'https://xivapi.com/m/o1a1/o1a1.00.jpg'
 
   // Inject new fish, including intuitions
-  const OCEAN_FISHES = ${JSON.stringify(OCEAN_FISHES)}
-  for (const fishData of OCEAN_FISHES) {
+  const OF_FISHES = ${JSON.stringify(OF_FISHES)}
+  for (const fishData of OF_FISHES) {
     DATA.ITEMS[fishData._id] = FISH_INFO.find(x => x.id === fishData._id)
     for (const id in fishData.predators) {
       DATA.ITEMS[id] = (DATA.ITEMS[id] || FISH_INFO.find(x => x.id === +id))
@@ -411,24 +424,23 @@ script.innerHTML = `
   const templateScript = document.getElementById('fish-template')
   const newTemplateString = $(templateScript).text()
     .replace(
-      /{{\\?[^{}]*?}}\\s*All Day\\s*{{\\?\\?}}[\\s\\S]*?{{\\?}}/,
+      /{{\\?[^{}]*?}}\\s*All Day\\s*{{\\?\\?}}/,
       \`
-        {{? it.data.__isBlueFish__ }}
-          {{=it.data.__requirement__}}
+        {{? it.data.OF_isBlueFish }}
+          {{=it.data.OF_requirement}}
         {{?? it.data.startHour === 0 && it.data.endHour === 24}}
           All Day
         {{??}}
-          {{=it.data.startHour + ' - ' + it.data.endHour}}
-        {{?}}
       \`
     )
     .replace(
-      /{{\\?\\s*?it\\.data\\.conditions\\.previousWeatherSet.*?}}/,
-      m => {console.log(m); return \`
-        {{? it.data.__isBlueFish__ }}
-          <a href="{{=it.data.__pfnUrl__}}" target="_blank">pf-n.co</a>
+      /<!--\\s*Weather\\s*-->/,
+      m => \`
+        <!-- Weather -->
+        {{? it.data.OF_isBlueFish }}
+          <a href="{{=it.data.OF_pfnUrl}}" target="_blank">pf-n.co</a>
         {{?}}
-      \` + m}
+      \`
     )
 
   ViewModel.layout.templates.fishEntry = doT.template(newTemplateString)
