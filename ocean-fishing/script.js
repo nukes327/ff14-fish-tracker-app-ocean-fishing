@@ -365,7 +365,7 @@ script.innerHTML = `
     let startOfWindow = null
     let latestWindow = _(fish.catchableRanges).last()
     if (latestWindow) {
-      startOfWindow = new Date(+latestWindow.end())
+      startOfWindow = new Date(+latestWindow.end)
       startOfWindow = dateFns.utc.addHours(startOfPeriod(startOfWindow), 24) // Adding 24 bells = 70 minutes will get us out of the current window
     } else {
       startOfWindow = new Date(eorzeaTime.getCurrentEorzeaDate())
